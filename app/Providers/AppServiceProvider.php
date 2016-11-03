@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('frontend.header', function ($view) {
-            $view->with('headerCategories', Category::whereNull('parent_id')->get());
+            $view->with('headerCategories', Category::where('parent_id', 0)->get());
         });
         view()->composer('*', function ($view) {
             $view->with('siteBanners', Banner::all());

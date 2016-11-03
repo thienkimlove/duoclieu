@@ -100,7 +100,6 @@ return [
                 ],
             ],
             'modules' => [
-                'show_on_index' => 'Show on Homepage',
                 'hot_in_category' => 'Hot in Category'
             ]
         ],
@@ -542,7 +541,7 @@ return [
                     'value' => 'content',
                     'type' => 'editor',
                     'display' => false,
-                    'edit' => true
+                    'edit' => false
                 ],
                 [
                     'name' => 'Image',
@@ -562,7 +561,7 @@ return [
                     'name' => 'Views',
                     'value' => 'views',
                     'type' => 'integer',
-                    'display' => true,
+                    'display' => false,
                     'edit' => false
                 ],
 
@@ -724,6 +723,7 @@ return [
     ],
     'users' => [
         'manhquan.do@ved.com.vn' => 'admin',
+        'truongkien1511@gmail.com' => 'admin',
         'test@example.com' => 'editor'
     ],
     'permission' => [

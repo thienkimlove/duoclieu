@@ -57,7 +57,7 @@
                     <li class="parentMenu">
                         <a href="javascript:void(0)"
                            title="{{$headerCategory->title}}"
-                           class="{{(isset($page) && ($page == $headerCategory->slug || in_array($page, $headerCategory->subCategories->lists('slug')->all()))) ? 'active' : ''}}">{{$headerCategory->title}}</a>
+                           class="{{(isset($page) && ($page == $headerCategory->slug || in_array($page, $headerCategory->subCategories->pluck('slug')->all()))) ? 'active' : ''}}">{{$headerCategory->title}}</a>
 
                         <ul class="submenu">
                             @foreach ($headerCategory->subCategories as $childCategory)

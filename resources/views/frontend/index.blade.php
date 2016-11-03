@@ -95,15 +95,18 @@
                                 <div class="name">Lương đình của</div>
                             </div>
                         </div>
+                        @if ($indexQuestions->count() > 0)
                         <div class="question-list pr">
                             @foreach ($indexQuestions as $question)
                                 <a href="{{url('hoi-dap', $question->slug)}}" class="ques" title="{{$question->title}}">{{$question->title}}</a>
                             @endforeach
                             <a href="{{url('hoi-dap')}}" class="ask-question" title="Đặt câu hỏi tại đây">Đặt câu hỏi tại đây</a>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
+            @if ($comments->count() > 0)
             <div class="block-5 pr">
                 <h2 class="rs">KHÁCH HÀNG CẢM NHẬN</h2>
                 <div class="feeling-of-cus">
@@ -129,6 +132,7 @@
                 </div>
                  @include('frontend.pagination', ['paginate' => $comments])
             </div>
+            @endif
         </div>
         @include('frontend.right_index')
     </div>

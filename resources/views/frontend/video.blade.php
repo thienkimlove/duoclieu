@@ -15,9 +15,9 @@
                 @endif
                 <div class="thumb-video">
                     @foreach ($videos as $video)
-                    <a href="javascript:void(0)" title="Trailer">
+                    <a href="{{url('video', $video->slug)}}" title="Trailer">
                         <img src="{{url('img/cache/190x129', $video->image)}}" alt="" width="190" height="129" class="imgFull">
-                        <span class="title">{{url('video', $video->slug)}}</span>
+                        <span class="title">{{$video->title}}</span>
                         <span class="view-count">
                            Lượt xem {{$video->views}}
                         </span>

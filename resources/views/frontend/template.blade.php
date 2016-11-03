@@ -36,7 +36,7 @@
                 <div class="fixCen">
                     <div id="slider-1" class="pr">
                         @foreach ($siteBanners as $banner)
-                            @if ($banner->postion_id == 3)
+                            @if ($banner->position_id == 3)
                                 <a href="{{$banner->url}}"><img src="{{url('files', $banner->image)}}" alt="" width="731" height="352"></a>
                             @endif
                         @endforeach

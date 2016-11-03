@@ -217,7 +217,7 @@ class FrontendController extends Controller
                 $totalDeliveries[$area] = Delivery::where('area', $key)->get();
             }
 
-            return view('frontend.new_phanphoi', compact('totalDeliveries', 'page'))->with($this->generateMeta('phan-phoi', [
+            return view('frontend.delivery', compact('totalDeliveries', 'page'))->with($this->generateMeta('phan-phoi', [
                 'title' => $meta_title,
                 'desc' => $meta_desc,
                 'keywords' => $meta_keywords,
@@ -351,9 +351,14 @@ class FrontendController extends Controller
             return view('frontend.post', compact('post', 'page'))->with($this->generateMeta('post', [
                 'title' => ($post->seo_title) ? $post->seo_title : $post->title,
                 'desc' => $post->desc,
-                'keyword' => ($post->tagList) ? implode(',', $post->tagList) : null,
+                'keywords' => ($post->tagList) ? implode(',', $post->tagList) : null,
             ], $post));
         } else {
+
+            if ($value == 'duoc-lieu-online') {
+                return redirect()->away('http://tuelinh.vn/san-pham');
+            }
+
             $category = Category::where('slug', $value)->first();
 
             if ($category->subCategories->count() == 0) {
@@ -406,7 +411,7 @@ class FrontendController extends Controller
             ))->with($this->generateMeta('category', [
                 'title' => ($category->seo_name) ?  $category->seo_name : $category->name,
                 'desc' =>  ($category->desc)? $category->desc : null,
-                'keyword' => ($category->keywords)? $category->keywords : null,
+                'keywords' => ($category->keywords)? $category->keywords : null,
             ], $category));
         }
     }
