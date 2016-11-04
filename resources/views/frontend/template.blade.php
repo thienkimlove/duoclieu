@@ -41,7 +41,7 @@
                             @endif
                         @endforeach
                     </div>
-                    <div id="slide-preview"></div>
+                    <div id="slide-preview"><img src="" /></div>
                 </div>
             </div>
         @else
@@ -65,7 +65,7 @@
                             <div class="item">
                                 <img src="{{url('img/cache/220x140', $product->image)}}" alt="{{$product->title}}" width="220" height="140">
                                 <div class="pro-name">{{$product->title}}</div>
-                                <div class="des">{{$product->desc}}</div>
+                                <div class="des">{{str_limit($product->desc, 140)}}</div>
                             </div>
                         @endforeach
                     </div>

@@ -20,7 +20,7 @@
                           <div class="post">
                             <img src="{{url('img/cache/287x179', $indexPost->image)}}" alt="" width="287" height="179">
                             <h4><a href="{{url($indexPost->slug.'.html')}}" class="title" title="{{$indexPost->title}}">{{$indexPost->title}}</a></h4>
-                            <div class="sumary">{{$indexPost->desc}}</div>
+                            <div class="sumary">{{str_limit($indexPost->desc, 140)}}</div>
                             <div class="related-news">
                                 @foreach ($indexPost->related_posts->slice(0, 2) as $r_post)
                                 <a href="{{url($r_post->slug.'.html')}}" title="{{$r_post->title}}">{{$r_post->title}}</a>
@@ -53,7 +53,7 @@
                                 <div class="post">
                                     <img src="{{url('img/cache/301x183', $firstPost->image)}}" alt="" width="301" height="183">
                                     <h4><a href="{{url($firstPost->slug.'.html')}}" class="title" title="{{$firstPost->title}}">{{$firstPost->title}}</a></h4>
-                                    <div class="sumary">{{$firstPost->desc}}</div>
+                                    <div class="sumary">{{str_limit($firstPost->desc, 140)}}</div>
                                 </div>
                             </div>
                           @endif
@@ -63,7 +63,7 @@
                                 <img src="{{url('img/cache/126x90', $indexPost->image)}}" alt="" width="126" height="90">
                                 <div class="news-info">
                                     <h4><a href="{{url($indexPost->slug.'.html')}}" class="title" title="{{$indexPost->title}}">{{$indexPost->title}}</a></h4>
-                                    <div class="sumary">{{$indexPost->desc}}</div>
+                                    <div class="sumary">{{str_limit($indexPost->desc, 140)}}</div>
                                 </div>
                             </div>
                             @endforeach
@@ -125,7 +125,7 @@
                                     <div class="title">{{$comment->title}}</div>
                                 </div>
                             </div>
-                            <div class="comment">{{$comment->desc}}</div>
+                            <div class="comment">{{str_limit($comment->desc, 140)}}</div>
                         </div>
                     </div>
                     @endforeach
