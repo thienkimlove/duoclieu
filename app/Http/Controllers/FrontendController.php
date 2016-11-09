@@ -276,11 +276,12 @@ class FrontendController extends Controller
 
     public function search(Request $request)
     {
+        $page = 'search';
         if ($request->input('q')) {
             $keyword = $request->input('q');
             $posts = Post::publish()->where('title', 'LIKE', '%' . $keyword . '%')->paginate(10);
 
-            return view('frontend.search', compact('posts', 'keyword'))->with($this->generateMeta('tag', [
+            return view('frontend.search', compact('posts', 'keyword', 'page'))->with($this->generateMeta('tag', [
                 'title' => 'Tìm kiếm cho từ khóa ' . $keyword,
                 'desc' => 'Tìm kiếm cho từ khóa ' . $keyword,
                 'keywords' => $keyword,

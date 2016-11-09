@@ -18,7 +18,7 @@
    @elseif (isset($page) &&  $page == 'video')
         <link rel="stylesheet" href="{{url('frontend/css/video.css')}}">
     @else
-        @if (isset($category_page_type) && $category_page_type == 'normal')
+        @if ((isset($category_page_type) && $category_page_type == 'normal') || (isset($page) && $page == 'tag') || (isset($page) && $page == 'search'))
         <link rel="stylesheet" href="{{url('frontend/css/bantinDl.css')}}">
         @elseif (isset($category_page_type) && $category_page_type == 'special')
             <link rel="stylesheet" href="{{url('frontend/css/dlcaythuoc.css')}}">
