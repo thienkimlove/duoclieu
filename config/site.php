@@ -287,7 +287,7 @@ return [
                 ],
                 [
                     'name' => 'Answer',
-                    'value' => 'question',
+                    'value' => 'answer',
                     'type' => 'text',
                     'display' => false,
                     'edit' => true
