@@ -58,7 +58,7 @@ class Category extends Model
     }
     public function getParentListAttribute()
     {
-        return array(0 => 'Choose Parent Categories') + Category::pluck('title', 'id')->all();
+        return array(0 => 'Choose Parent Categories') + Category::whereNull('parent_id')->pluck('title', 'id')->all();
     }
 
     public function posts()
