@@ -67,7 +67,7 @@ class ContentsController extends Controller
 
         $searchContent = '';
         $cateContent = '';
-        $modelContents = $modelName::latest('updated_at');
+        $modelContents = $modelName::latest('created_at');
 
 
         if ($request->input('q')) {
