@@ -42,3 +42,15 @@
         @include('frontend.right')
     </div>
 @endsection
+
+@section('script')
+    <script>
+        $(document).ready(function(){
+            $('#searchPro').click(function(e){
+                e.preventDefault();
+                var cityId = $('#byProvine').val();
+                window.location.href ='/phan-phoi/' + cityId;
+            })
+        });
+    </script>
+@endsection

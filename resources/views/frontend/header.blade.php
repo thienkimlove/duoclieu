@@ -1,4 +1,4 @@
-@foreach ($siteBanners as $banner)
+﻿@foreach ($siteBanners as $banner)
     @if ($banner->position_id == 1)
         <div class="banner-ads left">
             <a href="{{$banner->url}}"><img src="{{url('files', $banner->image)}}" alt="" width="171" height="454"></a>
@@ -19,14 +19,14 @@
     </div>
     <nav id="top-nav" class="menu-mb">
         <ul class="fixCen pr rs">
-            <li><a href="#" title="Giảo cổ lam" class="active">Giảo cổ lam</a></li>
+            <li><a href="http://www.giaocolam.vn" title="Giảo cổ lam" class="active">Giảo cổ lam</a></li>
             <li><a href="#" title="Sâm cau">Sâm cau</a></li>
             <li><a href="#" title="Nhung hươu">Nhung hươu</a></li>
             <li><a href="#" title="Sữa ong chúa">Sữa ong chúa</a></li>
             <li><a href="#" title="Ráy gai">Ráy gai</a></li>
             <li><a href="#" title="Mạ mân">Mạ mân</a></li>
             <li><a href="#" title="An xoa (tổ kén)">An xoa (tổ kén)</a></li>
-            <li><a href="#" title="Cà gai leo">Cà gai leo</a></li>
+            <li><a href="http://www.cagaileo.vn" title="Cà gai leo">Cà gai leo</a></li>
         </ul>
     </nav>
     <div class="setBg">
@@ -55,7 +55,7 @@
             @foreach ($headerCategories as $headerCategory)
                 @if ($headerCategory->subCategories->count() > 0)
                     <li class="parentMenu">
-                        <a href="javascript:void(0)"
+                        <a href="{{url($headerCategory->slug)}}"
                            title="{{$headerCategory->title}}"
                            class="{{(isset($page) && ($page == $headerCategory->slug || in_array($page, $headerCategory->subCategories->pluck('slug')->all()))) ? 'active' : ''}}">{{$headerCategory->title}}</a>
 

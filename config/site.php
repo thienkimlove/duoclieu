@@ -98,9 +98,21 @@ return [
                     'display' => false,
                     'edit' => true
                 ],
+                [
+                    'name' => 'Loại Bệnh',
+                    'value' => 'disease',
+                    'type' => 'special',
+                    'edit_value' => 'disease', //using for edit.
+                    'relation_list' => 'disease_list',  //function at this model to get category list.
+                    'display' => false,
+                    'edit' => true
+                ],
             ],
             'modules' => [
-                'hot_in_category' => 'Hot in Category'
+                'hot_in_category' => 'Hot Chuyên mục',
+                'is_most_read' => 'Most Read Category',
+                'is_latest_news' => 'Latest Category',
+                'show_on_index' => 'Hiện Ngoài Trang Chủ',
             ]
         ],
         'categories' => [
@@ -152,29 +164,12 @@ return [
                 ]
             ],
             'modules' => [
-                'first_block_index' => 'Display on Block 1 Homepage',
-                'second_block_index' => 'Display on Block 2 Homepage',
-                'is_medicine' => 'Duoc Lieu Category',
-                'is_disease' => 'Benh Category',
+                'first_block_index' => 'Hiển thị Block1 Trang Chủ',
+                'second_block_index' => 'Hiển thị Block1 Trang Chủ',
+                'is_medicine' => 'Chuyên mục Dược Liệu',
+                'is_disease' => 'Chuyên mục Bệnh',
+                'is_special_layout' => 'Layout Đặc biệt',
             ]
-        ],
-        'positions' => [
-            'fields' => [
-                [
-                    'name' => 'ID',
-                    'value' => 'id',
-                    'type' => 'primary',
-                    'display' => true,
-                    'edit' => false
-                ],
-                [
-                    'name' => 'Name',
-                    'value' => 'name',
-                    'type' => 'string',
-                    'display' => true,
-                    'edit' => true
-                ],
-            ],
         ],
         'banners' => [
             'fields' => [
@@ -326,6 +321,25 @@ return [
                     'display' => false,
                     'edit' => true
                 ],
+            ],
+        ],
+        'tags' => [
+            'fields' => [
+                [
+                    'name' => 'ID',
+                    'value' => 'id',
+                    'type' => 'primary',
+                    'display' => true,
+                    'edit' => false
+                ],
+                [
+                    'name' => 'Title',
+                    'value' => 'title',
+                    'type' => 'string',
+                    'display' => true,
+                    'edit' => true
+                ],
+
             ],
         ],
         'comments' => [
@@ -523,6 +537,13 @@ return [
                     'edit' => true
                 ],
                 [
+                    'name' => 'Link',
+                    'value' => 'link',
+                    'type' => 'string',
+                    'display' => true,
+                    'edit' => true
+                ],
+                [
                     'name' => 'Description',
                     'value' => 'desc',
                     'type' => 'text',
@@ -593,7 +614,7 @@ return [
 
             ],
             'modules' => [
-                'feature_index' => 'Display on Homepage'
+                'feature_index' => 'Hiện thị Trang Chủ'
             ]
         ],
         'deliveries' => [
@@ -720,10 +741,44 @@ return [
                 ],
             ],
         ],
+        'positions' => [
+            'fields' => [
+                [
+                    'name' => 'ID',
+                    'value' => 'id',
+                    'type' => 'primary',
+                    'display' => true,
+                    'edit' => false
+                ],
+                [
+                    'name' => 'Name',
+                    'value' => 'name',
+                    'type' => 'string',
+                    'display' => true,
+                    'edit' => true
+                ],
+            ],
+        ],
     ],
     'users' => [
         'manhquan.do@ved.com.vn' => 'admin',
         'truongkien1511@gmail.com' => 'admin',
+        'linhptk@tuelinh.com' => 'admin',
+        'hongvt@tuelinh.com' => 'admin',
+        'quynhltt@tuelinh.com' => 'admin',
+        'hienttd@tuelinh.com' => 'admin',
+        'thankieumy@gmail.com' => 'admin',
+        'huylc@tuelinh.com' => 'admin',
+        'maintt@tuelinh.com' => 'admin',
+        'annt@tuelinh.com' => 'admin',
+		'minhnt@tuelinh.com' => 'admin',
+		'ngocanh271198@gmail.com' => 'admin',
+		'annghiem88@gmail.com' => 'admin',
+		'tunt@caia.vn' => 'admin',
+		'hungth@caia.vn' => 'admin',
+		'phuongnd@caia.vn' => 'admin',
+		'trangth@caia.vn' => 'admin',
+
         'test@example.com' => 'editor'
     ],
     'permission' => [

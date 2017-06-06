@@ -20,8 +20,7 @@
                         </div>
                     </div>
                     <div class="sumary">
-                        Với đội ngũ bác sĩ , dược sĩ nhiều năm kinh nghiệm và các chuyên gia hàng đầu của hãng dược phẩm Pleuran.
-                        Chúng tôi luôn lắng nghe và sẵn sàng tư vấn với mong muốn mang tới sức khỏe toàn diện cho thế hệ mầm non Việt Nam.
+                       Với đội ngũ bác sĩ , dược sĩ nhiều năm kinh nghiệm và các chuyên gia hàng đầu của Tuệ Linh. Chung tôi luôn lắng nghe và sẵn sàng tư vấn nhằm đem đến cái nhìn đúng nhất về dược liệu và tiềm năng phát triển dược liệu ở Việt Nam. Đem dược liệu trở thành thế mạnh của ngành dược.
                     </div>
                 </div>
                 <div class="block-2">

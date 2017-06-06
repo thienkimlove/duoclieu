@@ -84,6 +84,19 @@ return array(
         '190x129' => function($image) {
             return $image->fit(190, 129);
         },
+        '303x244' => function($image) {
+            return $image->fit(303, 244);
+        },
+        '453x326' => function($image) {
+            return $image->fit(453, 326);
+        },
+        '275x156' => function($image) {
+            return $image->fit(275, 156);
+        },
+
+        '120x120' => function($image) {
+            return $image->fit(120, 120);
+        },
     ),
 
     /*

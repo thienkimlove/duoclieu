@@ -5,14 +5,14 @@
         <div class="left-content">
             <div class="steps">
                 <h2 class="rs">{{$category->name}}</h2>
-                {!! Form::open(array('url' => url('search'), 'id' => 'search-thuoc')) !!}
+                {!! Form::open(array('url' => url($category->slug), 'id' => 'search-thuoc', 'method' => 'GET')) !!}
                     <input type="text" name="q" placeholder="Từ khóa: tên dược liệu, ten khóa học"/>
                     <button value="Tìm">Tìm</button>
                 {!! Form::close() !!}
             </div>
             <div id="searchByabc">
                 @foreach (['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'] as $character)
-                   <a href="{{url('search?q='.$character)}}" title="Tìm theo chữ cái {{$character}}">{{$character}}</a>
+                   <a href="{{url($category->slug.'?sort='.strtolower($character))}}" title="Tìm theo chữ cái {{$character}}">{{$character}}</a>
                 @endforeach
             </div>
             <div class="list-news">

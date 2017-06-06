@@ -18,6 +18,9 @@
                             <button class="btn btn-default" type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
+                            @if (isset($cateContent))
+                                <input type="hidden"  name="cate" value="{{$cateContent}}" />
+                            @endif
                         </span>
 						
                         {!! Form::close() !!}
@@ -37,6 +40,11 @@
                                     @endif
                                 @endforeach
                                 <th>Action</th>
+                                    @if ($modules)
+                                        @foreach ($modules as $k => $module)
+                                            <th>{{$module}}</th>
+                                        @endforeach
+                                    @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -55,42 +63,52 @@
                                             @elseif ($field['type'] == 'config')
                                                 <td>{{$model->{$field['sub_value']} }}</td>
                                             @else
-                                                <td>{{ $model->{$field['value']} }}</td>
+                                                @if ($realModel == 'categories' && $field['value'] == 'title')
+                                                    <td><a href="{{url('admin/posts?cate='.$model->id)}}">{{$model->{$field['value']} }}</a></td>
+                                                @else
+                                                    <td>{{ $model->{$field['value']} }}</td>
+                                                @endif
                                             @endif
                                         @endif
                                     @endforeach
 
                                     <td>
-                                        <button id-attr="{{$model->id}}" content-attr="{{$realModel}}" class="btn btn-primary btn-sm edit-content" type="button">Edit</button>&nbsp;
+                                        <button id-attr="{{$model->id}}" content-attr="{{$realModel}}" class="btn btn-primary btn-sm edit-content" type="button">Edit</button>
+										<br/>
+										<br/>
                                         {!! Form::open(['method' => 'DELETE', 'url' => url('admin/'.$realModel.'/'.$model->id)]) !!}
                                                <button type="submit" class="btn btn-danger btn-mini">Delete</button>
+										<br/>
+										<br/>
                                         {!! Form::close() !!}
                                         @if ($realModel == 'posts')
                                             <button class="btn btn-primary btn-sm" type="button">
                                                 <a target="_blank" href="{{url($model->slug.'.html')}}" style="color:#FFFFFF">View in Site</a>
                                             </button>
                                         @endif
+                                    </td>
 
                                         @if ($modules)
                                             @foreach ($modules as $k => $module)
-                                                @if ($enabled = \App\Site::moduleEnable($k, $realModel, $model->id))
-                                                    {!! Form::open(['method' => 'DELETE', 'url' => url('admin/modules/'.$enabled->id)]) !!}
-                                                        <button type="submit" class="btn btn-danger btn-mini">Disable {{$module}}</button>
-                                                        <input type="hidden" name="redirect_back" value="{{Request::url()}}" />
-                                                    {!! Form::close() !!}
-                                                @else
-                                                    {!! Form::open(['method' => 'POST', 'url' => url('admin/modules')]) !!}
-                                                    <input type="hidden" name="key_name" value="{{$module}}" />
+                                                <td>
+                                                    @if ($enabled = \App\Site::moduleEnable($k, $realModel, $model->id))
+                                                        {!! Form::open(['method' => 'DELETE', 'url' => url('admin/modules/'.$enabled->id)]) !!}
+                                                        <button type="submit" class="btn btn-danger btn-mini">Ẩn</button>
+                                                        <input type="hidden" name="redirect_back" value="{{Request::fullUrl()}}" />
+                                                        {!! Form::close() !!}
+                                                    @else
+                                                        {!! Form::open(['method' => 'POST', 'url' => url('admin/modules')]) !!}
+                                                        <input type="hidden" name="key_name" value="{{$module}}" />
                                                         <input type="hidden" name="key_type" value="{{$k}}" />
                                                         <input type="hidden" name="key_content" value="{{$realModel}}" />
                                                         <input type="hidden" name="key_value" value="{{$model->id}}" />
-                                                        <input type="hidden" name="redirect_back" value="{{Request::url()}}" />
-                                                        <button type="submit" class="btn btn-danger btn-mini">Enable {{$module}}</button>
-                                                    {!! Form::close() !!}
-                                                @endif
+                                                        <input type="hidden" name="redirect_back" value="{{Request::fullUrl()}}" />
+                                                        <button type="submit" class="btn btn-danger btn-mini">Hiện</button>
+                                                        {!! Form::close() !!}
+                                                    @endif
+                                                </td>
                                             @endforeach
                                         @endif
-                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -68,6 +68,13 @@
                                 {!! Form::label($field['edit_value'], $field['name']) !!}
                                 {!! Form::select($field['edit_value'], $modelContent->{$field['relation_list']} , null, ['class' => 'form-control']) !!}
                             </div>
+                        @elseif ($field['type'] == 'special')
+                            @if ($modelContent->{$field['relation_list']})
+                                <div class="form-group">
+                                    {!! Form::label($field['edit_value'], $field['name']) !!}
+                                    {!! Form::select($field['edit_value'], array(0 => 'chọn Bệnh') + $modelContent->{$field['relation_list']} , null, ['class' => 'form-control']) !!}
+                                </div>
+                            @endif
                         @endif
                     @endif
             @endforeach

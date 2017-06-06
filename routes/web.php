@@ -22,4 +22,5 @@ Route::get('tag/{value}', 'FrontendController@tag');
 Route::get('search', 'FrontendController@search');
 Route::get('product/{value?}', 'FrontendController@product');
 Route::get('hoi-dap/{value?}', 'FrontendController@question');
+Route::get('sitemap', 'FrontendController@sitemap');
 Route::get('{value}', 'FrontendController@main');

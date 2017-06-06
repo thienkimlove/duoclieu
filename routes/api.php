@@ -32,7 +32,7 @@ Route::get('/posts', function(){
         ->pluck('key_value')
         ->all();
 
-    $posts = \App\Post::whereIn('category_id', array_merge($medicineCategoryIds, $diseaseCategoryIds))
+    $posts = \App\Post::whereIn('category_id', array_merge($medicineCategoryIds, $diseaseCategoryIds))->orderBy('title', 'asc')
         ->get();
 
     foreach ($posts as $post) {

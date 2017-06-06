@@ -69,10 +69,49 @@ class Category extends Model
 
     public function getIndexPostsAttribute()
     {
-        return Post::where('category_id', $this->id)
-            ->where('status', true)
-            ->latest('updated_at')
-            ->limit(5)
-            ->get();
+
+        $showIndex = Module::where('key_type', 'show_on_index')->where('key_content', 'posts')->pluck('key_value')->all();
+
+
+        if ($this->subCategories->count() == 0) {
+            return Post::where('category_id', $this->id)
+                ->whereIn('id', $showIndex)
+                ->where('status', true)
+                ->latest('updated_at')
+                ->limit(5)
+                ->get();
+        } else {
+            return Post::whereIn('category_id', $this->subCategories->pluck('id')->all())
+                ->where('status', true)
+                ->whereIn('id', $showIndex)
+                ->latest('updated_at')
+                ->limit(5)
+                ->get();
+        }
+
+    }
+
+    public function getIndexLongPostsAttribute()
+    {
+
+        $showIndex = Module::where('key_type', 'show_on_index')->where('key_content', 'posts')->pluck('key_value')->all();
+
+
+        if ($this->subCategories->count() == 0) {
+            return Post::where('category_id', $this->id)
+                ->whereIn('id', $showIndex)
+                ->where('status', true)
+                ->latest('updated_at')
+                ->limit(10)
+                ->get();
+        } else {
+            return Post::whereIn('category_id', $this->subCategories->pluck('id')->all())
+                ->where('status', true)
+                ->whereIn('id', $showIndex)
+                ->latest('updated_at')
+                ->limit(10)
+                ->get();
+        }
+
     }
 }

@@ -3,10 +3,11 @@
 @section('content')
     <div class="fixCen main-content groups">
         <div class="left-content">
+            @if (!isset($is_benh) || !$is_benh)
             <div class="steps">
                 @if ($post->category->parent_id)
                 <h2 class="rs">
-                    <a href="{{url($post->category->parent()->slug)}}" title="{{$post->category->parent()->title}}">{{$post->category->parent()->title}}}</a>
+                    <a href="{{url($post->category->parent->slug)}}" title="{{$post->category->parent->title}}">{{$post->category->parent->title}}</a>
                 </h2> <span class="arrow-step"></span>
                 @endif
                 <h3 class="rs"><a href="{{url($post->category->slug)}}" title="{{$post->category->title}}">{{$post->category->title}}</a></h3>
@@ -19,24 +20,13 @@
                         {!! $post->content !!}
                     </article>
                     <div class="content-bottom">
-                        <div class="bnt-like-fb">
-                            <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2F9kiem.mobile%2F&width=58&layout=box_count&action=like&size=small&show_faces=false&share=false&height=65&appId" width="58" height="65" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-                        </div>
-                        <div class="btn-like-gg">
-                            <!-- Đặt thẻ này vào nơi bạn muốn Nút +1 kết xuất. -->
-                            <div class="g-plusone" data-size="tall" data-href="{{url($post->slug.'.html')}}"></div>
-                        </div>
-                        <div class="btn-share-fb">
-                            <img src="{{url('frontend/images/iflike.jpg')}}" alt="" class="if-like imgFull" width="242" height="32">
-                            <a href="javascript:void(0)" title="Share lên fanpage">
-                                <img src="{{url('frontend/images/fb-share-btn.png')}}" alt="" width="235" height="48" class="btn-like imgFull">
-                            </a>
-                        </div>
+                        <div class='fb-like' data-action='like' data-href='{{url($post->slug.'.html')}}' data-layout='button_count' data-share='true' data-show-faces='false' data-width='520'></div>
+
                     </div>
                     <div class="data-tags">
                         <span>Từ khóa: </span>
                         @foreach ($post->tags as $tag)
-                            <a href="{{url('tag/'.$tag->slug)}}" title="">{{$tag->name}}</a>
+                            <a href="{{url('tag/'.$tag->slug)}}" title="">{{$tag->title}}</a>
                         @endforeach
                     </div>
                     <div class="contact-bottom">
@@ -70,16 +60,35 @@
                         @endforeach
                     </div>
                     <div class="comment-bottom">
-                        <h4 class="rs">BÌNH LUẬN</h4>
-                        <div class="content">
-                            <img src="{{url('frontend/images/avatar-icon.jpg')}}" alt="" class="avatar-cmt" width="46" height="46">
-                            <div class="cmt">
-                                <input type="text" placeholder="Thêm bình luận...">
-                            </div>
-                        </div>
+                        <div class="fb-comments" data-href="{{url($post->slug.'.html')}}" data-numposts="5"></div>
                     </div>
                 </div>
             </div>
+            @else
+                <div class="steps">
+                    <h2 class="rs">{{$post->title}}</h2>
+                </div>
+                <div class="list-news">
+                    <div class="news">
+                        @foreach ($posts as $uPost)
+                            <div class="post post-news">
+                                <div class="post-content">
+                                    <a href="{{url($uPost->slug.'.html')}}" title="{{$uPost->title}}" class="img-title">
+                                        <img src="{{url('img/cache/224x135', $uPost->image)}}" alt="" width="224" height="135" class="imgFull">
+                                    </a>
+                                    <a href="{{url($uPost->slug.'.html')}}" class="name" title="Giảo cổ lam"> {{$uPost->name}}</a>
+                                    <a href="{{url($uPost->slug.'.html')}}" class="title" title="Tên khoa học">
+                                        {{$uPost->s_name}}
+                                    </a>
+                                    <div class="sumary">
+                                        {{$uPost->desc}}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
        @include('frontend.right')
     </div>

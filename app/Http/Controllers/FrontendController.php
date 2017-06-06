@@ -124,6 +124,8 @@ class FrontendController extends Controller
     {
         $page = 'index';
 
+        $page_css = 'home';
+
         $indexBlock1CategoryIds = DB::table('modules')
             ->where('key_content', 'categories')
             ->where('key_type', 'first_block_index')
@@ -158,22 +160,27 @@ class FrontendController extends Controller
             'indexBlock1Categories',
             'indexBlock2Categories',
             'indexQuestions',
-            'comments'
+            'comments',
+            'page_css'
         ))->with($this->generateMeta());
     }
 
     public function contact()
     {
         $page = 'lien-he';
-        return view('frontend.contact', compact('page'))->with($this->generateMeta('lien-he'));
+
+        $page_css = 'lienhe';
+
+        return view('frontend.contact', compact('page', 'page_css'))->with($this->generateMeta('lien-he'));
     }
 
     public function video($value = null)
     {
         $page = 'video';
+        $page_css = 'video';
         $mainVideo = null;
         $meta_title = $meta_desc = $meta_keywords = null;
-        $videos = Video::paginate(6);
+        $videos = Video::latest('created_at')->paginate(12);
 
         if ($videos->count() > 0) {
             $mainVideo = $videos->first();
@@ -188,7 +195,7 @@ class FrontendController extends Controller
         }
 
 
-        return view('frontend.video', compact('videos', 'mainVideo', 'page'))->with($this->generateMeta('video', [
+        return view('frontend.video', compact('videos', 'mainVideo', 'page', 'page_css'))->with($this->generateMeta('video', [
             'title' => $meta_title,
             'desc' => $meta_desc,
             'keywords' => $meta_keywords,
@@ -206,18 +213,21 @@ class FrontendController extends Controller
             $meta_desc = $delivery->desc;
             $meta_keywords = $delivery->keywords;
 
-            return view('frontend.detail_delivery', compact('delivery', 'page'))->with($this->generateMeta('phan-phoi', [
+            $page_css = 'chitiet';
+
+            return view('frontend.detail_delivery', compact('delivery', 'page', 'page_css'))->with($this->generateMeta('phan-phoi', [
                 'title' => $meta_title,
                 'desc' => $meta_desc,
                 'keywords' => $meta_keywords,
             ], $delivery));
         } else {
             $totalDeliveries = [];
+            $page_css = 'htphanphoi';
             foreach (config('delivery')['area'] as $key => $area) {
                 $totalDeliveries[$area] = Delivery::where('area', $key)->get();
             }
 
-            return view('frontend.delivery', compact('totalDeliveries', 'page'))->with($this->generateMeta('phan-phoi', [
+            return view('frontend.delivery', compact('totalDeliveries', 'page', 'page_css'))->with($this->generateMeta('phan-phoi', [
                 'title' => $meta_title,
                 'desc' => $meta_desc,
                 'keywords' => $meta_keywords,
@@ -248,6 +258,8 @@ class FrontendController extends Controller
     {
         $page = 'tag';
 
+        $page_css = 'bantinDl';
+
         $tag = Tag::where('slug', $value)->get();
 
         if ($tag->count() > 0) {
@@ -265,7 +277,7 @@ class FrontendController extends Controller
                 ->orderBy('updated_at', 'desc')
                 ->paginate(10);
 
-            return view('frontend.tag', compact('posts', 'tag', 'page'))->with
+            return view('frontend.tag', compact('posts', 'tag', 'page', 'page_css'))->with
             ($this->generateMeta([
                 'title' => $meta_title,
                 'desc' => $meta_desc,
@@ -277,11 +289,12 @@ class FrontendController extends Controller
     public function search(Request $request)
     {
         $page = 'search';
+        $page_css = 'bantinDl';
         if ($request->input('q')) {
             $keyword = $request->input('q');
             $posts = Post::publish()->where('title', 'LIKE', '%' . $keyword . '%')->paginate(10);
 
-            return view('frontend.search', compact('posts', 'keyword', 'page'))->with($this->generateMeta('tag', [
+            return view('frontend.search', compact('posts', 'keyword', 'page', 'page_css'))->with($this->generateMeta('tag', [
                 'title' => 'Tìm kiếm cho từ khóa ' . $keyword,
                 'desc' => 'Tìm kiếm cho từ khóa ' . $keyword,
                 'keywords' => $keyword,
@@ -292,6 +305,7 @@ class FrontendController extends Controller
     public function product($value = null)
     {
         $page = 'product';
+        $page_css = 'bantinDl';
         $meta_title = $meta_desc = $meta_keywords = null;
         if ($value) {
             $product = Product::where('slug', $value)->first();
@@ -300,7 +314,8 @@ class FrontendController extends Controller
             $meta_keywords = $product->keywords;
             return view('frontend.product_detail', compact(
                 'product',
-                'page'
+                'page',
+                'page_css'
             ))->with($this->generateMeta('product', [
                 'title' => $meta_title,
                 'desc' => $meta_desc,
@@ -322,6 +337,7 @@ class FrontendController extends Controller
     public function question($value = null)
     {
         $page = 'hoi-dap';
+        $page_css = 'tuvancg';
         $mainQuestion = null;
         $meta_title = $meta_desc = $meta_keywords = null;
         if ($value) {
@@ -331,24 +347,62 @@ class FrontendController extends Controller
             $meta_keywords = $mainQuestion->keywords;
         }
         $questions = Question::where('status', true)->paginate(10);
-        return view('frontend.question', compact('questions', 'mainQuestion', 'page'))->with($this->generateMeta('hoi-dap', [
+        return view('frontend.question', compact('questions', 'mainQuestion', 'page', 'page_css'))->with($this->generateMeta('hoi-dap', [
             'title' => $meta_title,
             'desc' => $meta_desc,
             'keywords' => $meta_keywords,
         ], $mainQuestion));
     }
 
-    public function main($value)
+    public function main($value, Request $request)
     {
 
         if (preg_match('/([a-z0-9\-]+)\.html/', $value, $matches)) {
 
             $post = Post::where('slug', $matches[1])->first();
             $post->update(['views' => (int) $post->views + 1]);
+            $is_benh = false;
+            $page_css = 'chitiet';
+            $posts = [];
+            if ($post->category->id == 3) {
+                $is_benh = true;
+                $caythuocListIds =  \App\Content::where('benh_id', $post->id)->pluck('thuoc_id')->all();
+                $posts = Post::where('status', true)->latest('updated_at')->whereIn('id', $caythuocListIds)->get();
+                $page_css =  'dlcaythuoc';
+            }
 
             $page = $post->category->slug;
 
-            return view('frontend.post', compact('post', 'page'))->with($this->generateMeta('post', [
+            //addmore
+
+            $mostReadIds =  DB::table('modules')
+                ->where('key_content', 'posts')
+                ->where('key_type', 'is_most_read')
+                ->pluck('key_value')
+                ->all();
+
+            $latestNewIds =  DB::table('modules')
+                ->where('key_content', 'posts')
+                ->where('key_type', 'is_latest_news')
+                ->pluck('key_value')
+                ->all();
+
+            $mostReadInCategory = Post::where('status', true)
+                ->where('category_id', $post->category->id)
+                ->whereIn('id', $mostReadIds)
+                ->latest('updated_at')
+                ->limit(5)
+                ->get();
+
+            $latestNewInCategory = Post::where('status', true)
+                ->where('category_id', $post->category->id)
+                ->whereIn('id', $latestNewIds)
+                ->latest('updated_at')
+                ->limit(5)
+                ->get();
+
+
+            return view('frontend.post', compact('post', 'page', 'page_css', 'is_benh', 'posts', 'mostReadInCategory', 'latestNewInCategory'))->with($this->generateMeta('post', [
                 'title' => ($post->seo_title) ? $post->seo_title : $post->title,
                 'desc' => $post->desc,
                 'keywords' => ($post->tagList) ? implode(',', $post->tagList) : null,
@@ -356,41 +410,36 @@ class FrontendController extends Controller
         } else {
 
             if ($value == 'duoc-lieu-online') {
-                return redirect()->away('http://tuelinh.vn/san-pham');
+                return redirect()->away('http://shop.duoclieutuelinh.vn');
             }
 
             $category = Category::where('slug', $value)->first();
+            $posts = Post::where('status', true);
+            $posts = ($category->subCategories->count() == 0)? $posts->where('category_id', $category->id) : $posts->whereIn('category_id', $category->subCategories->pluck('id')->all());
 
-            if ($category->subCategories->count() == 0) {
-                //child categories
-                $posts = Post::where('status', true)
-                    ->where('category_id', $category->id)
-                    ->latest('updated_at')
-                    ->paginate(10);
-
-            } else {
-                //parent categories
-                $posts = Post::where('status', true)
-                    ->whereIn('category_id', $category->subCategories->pluck('id')->all())
-                    ->latest('updated_at')
-                    ->paginate(10);
-
+            if ($request->input('sort')) {
+                $posts = $posts->where('title', 'like', $request->input('sort').'%');
             }
 
+            if ($request->input('q')) {
+                $posts = $posts->where('title', 'like', $request->input('q').'%');
+            }
+
+            $posts = $posts->latest('created_at')->paginate(12);
             $page = $category->slug;
 
             //check if category is disease or medicine or not.
 
             $specialIds =  DB::table('modules')
                 ->where('key_content', 'categories')
-                ->where('key_type', 'is_disease')
-                ->OrWhere('key_type', 'is_medicine')
+                ->where('key_type', 'is_special_layout')
                 ->pluck('key_value')
                 ->all();
 
             $view_name = (in_array($category->id, $specialIds)) ? 'frontend.special_category' : 'frontend.normal_category';
             $category_page_type = (in_array($category->id, $specialIds)) ? 'special' : 'normal';
 
+            $page_css = ($category_page_type == 'normal') ? 'bantinDl' : 'dlcaythuoc';
 
             $hotPostIds =  DB::table('modules')
                 ->where('key_content', 'posts')
@@ -405,9 +454,37 @@ class FrontendController extends Controller
                 ->limit(1)
                 ->get();
 
+            //addmore
+
+            $mostReadIds =  DB::table('modules')
+                ->where('key_content', 'posts')
+                ->where('key_type', 'is_most_read')
+                ->pluck('key_value')
+                ->all();
+
+            $latestNewIds =  DB::table('modules')
+                ->where('key_content', 'posts')
+                ->where('key_type', 'is_latest_news')
+                ->pluck('key_value')
+                ->all();
+
+            $mostReadInCategory = Post::where('status', true)
+                ->where('category_id', $category->id)
+                ->whereIn('id', $mostReadIds)
+                ->latest('updated_at')
+                ->limit(5)
+                ->get();
+
+            $latestNewInCategory = Post::where('status', true)
+                ->where('category_id', $category->id)
+                ->whereIn('id', $latestNewIds)
+                ->latest('updated_at')
+                ->limit(5)
+                ->get();
+
 
             return view($view_name, compact(
-                'category', 'posts', 'page', 'hotPost', 'category_page_type'
+                'category', 'posts', 'page', 'hotPost', 'category_page_type', 'page_css', 'mostReadInCategory', 'latestNewInCategory'
             ))->with($this->generateMeta('category', [
                 'title' => ($category->seo_name) ?  $category->seo_name : $category->name,
                 'desc' =>  ($category->desc)? $category->desc : null,
@@ -416,5 +493,14 @@ class FrontendController extends Controller
         }
     }
 
+
+    public function sitemap()
+    {
+        $posts = Post::where('status', true)->orderBy('updated_at', 'desc')->get();
+
+        return response()->view('sitemap', [
+            'posts' => $posts
+        ])->header('Content-Type', 'text/xml');
+    }
 
 }

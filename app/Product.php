@@ -43,6 +43,7 @@ class Product extends Model
         'tinhtrang',
         'giacu',
         'giamoi',
+        'link'
 
     ];
 }

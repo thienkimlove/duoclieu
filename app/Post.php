@@ -48,6 +48,7 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+   
 
     /**
      * get the tags that associated with given post
@@ -65,6 +66,11 @@ class Post extends Model
     public function getTagListAttribute()
     {
         return $this->tags->pluck('title')->all();
+    }
+
+    public function getDiseaseListAttribute()
+    {
+        return  Post::where('category_id', 3)->pluck('title', 'id')->all();
     }
 
     public function getCategoryListAttribute()

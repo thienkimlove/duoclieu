@@ -20,7 +20,7 @@
                           <div class="post">
                             <img src="{{url('img/cache/287x179', $indexPost->image)}}" alt="" width="287" height="179">
                             <h4><a href="{{url($indexPost->slug.'.html')}}" class="title" title="{{$indexPost->title}}">{{$indexPost->title}}</a></h4>
-                            <div class="sumary">{{str_limit($indexPost->desc, 140)}}</div>
+                            <div class="sumary">{{str_limit($indexPost->desc, 85)}}</div>
                             <div class="related-news">
                                 @foreach ($indexPost->related_posts->slice(0, 2) as $r_post)
                                 <a href="{{url($r_post->slug.'.html')}}" title="{{$r_post->title}}">{{$r_post->title}}</a>
@@ -63,7 +63,7 @@
                                 <img src="{{url('img/cache/126x90', $indexPost->image)}}" alt="" width="126" height="90">
                                 <div class="news-info">
                                     <h4><a href="{{url($indexPost->slug.'.html')}}" class="title" title="{{$indexPost->title}}">{{$indexPost->title}}</a></h4>
-                                    <div class="sumary">{{str_limit($indexPost->desc, 140)}}</div>
+                                    <div class="sumary">{{str_limit($indexPost->desc, 120)}}</div>
                                 </div>
                             </div>
                             @endforeach
@@ -78,9 +78,7 @@
                 <div class="intro">
                     <div class="sumary">
                         <div class="border"></div>
-                        Với đội ngũ bác sĩ , dược sĩ nhiều năm kinh nghiệm và các chuyên gia hàng đầu của hãng dược phẩm Pleuran.
-                        Chúng tôi luôn lắng nghe và sẵn sàng tư vấn với mong muốn mang tới sức khỏe toàn diện cho thế hệ mầm non Việt Nam.
-                        <div class="border"></div>
+                        Với đội ngũ bác sĩ , dược sĩ nhiều năm kinh nghiệm và các chuyên gia hàng đầu của Tuệ Linh. Chung tôi luôn lắng nghe và sẵn sàng tư vấn nhằm đem đến cái nhìn đúng nhất về dược liệu và tiềm năng phát triển dược liệu ở Việt Nam. Đem dược liệu trở thành thế mạnh của ngành dược.
                     </div>
                     <div class="some-info">
                         <div class="doctors">
@@ -92,7 +90,7 @@
                             <div class="doc2 doc">
                                 <img src="{{url('frontend/images/bs-img2.jpg')}}" alt="" width="168" height="168" class="imgFull">
                                 <div class="pos">PGS.TS Thầy thuốc nhân dân</div>
-                                <div class="name">Lương đình của</div>
+                                <div class="name">Nguyễn Văn Mùi </div>
                             </div>
                         </div>
                         @if ($indexQuestions->count() > 0)
@@ -136,4 +134,18 @@
         </div>
         @include('frontend.right_index')
     </div>
+	
+<b:if cond='data:blog.pageType != &quot;item&quot;'>
+<div style='display:none;'>
+<div itemscope='' itemtype='http://schema.org/Recipe'>
+<span itemprop='name'>Dược liệu, dược liệu sạch, mua bán dược liệu, tra cứu dược liệu</span>
+<img alt= 'Dược liệu, dược liệu sạch, mua bán dược liệu, tra cứu dược liệu' - itemprop='image'
+src= 'http://www.duoclieutuelinh.vn/frontend/images/logo.png' title= 'Dược liệu, dược liệu sạch, mua bán dược liệu, tra cứu dược liệu'/>
+<div itemprop='aggregateRating' itemscope=''
+itemtype='http://schema.org/AggregateRating'>
+<span itemprop='ratingValue'>9</span>/<span itemprop='bestRating'>10</span>
+<span itemprop='ratingCount'>1521</span> bình chọn
+</div>
+</div></div>
+</b:if>
 @endsection

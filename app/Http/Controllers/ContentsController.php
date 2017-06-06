@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Tag;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -65,6 +66,7 @@ class ContentsController extends Controller
         list($realModel, $modelName, $fields, $modules) = $this->init($request);
 
         $searchContent = '';
+        $cateContent = '';
         $modelContents = $modelName::latest('updated_at');
 
 
@@ -72,9 +74,27 @@ class ContentsController extends Controller
             $searchContent = urldecode($request->input('q'));
             $modelContents = $modelContents->where('title', 'LIKE', '%' . $searchContent . '%');
         }
+        $customUrl = null;
+        if ($request->input('cate')) {
+
+            $cateContent = urldecode($request->input('cate'));
+            if ($realModel == 'posts') {
+                $customUrl = '/admin/posts/?cate='.$cateContent;
+            }
+            $category = Category::find($cateContent);
+            if ($category->subCategories->count() > 0) {
+                $modelContents = $modelContents->whereIn('category_id', $category->subCategories->pluck('id')->all());
+            } else {
+                $modelContents = $modelContents->where('category_id', $cateContent);
+            }
+        }
         $modelContents = $modelContents->paginate(config('site.item_per_page'));
 
-        return view('admin.content.index', compact('realModel', 'fields', 'modelContents', 'searchContent', 'modules'));
+        if ($customUrl) {
+            $modelContents->setPath($customUrl);
+        }
+
+        return view('admin.content.index', compact('realModel', 'fields', 'modelContents', 'searchContent', 'modules', 'cateContent'));
     }
 
     public function create(Request $request)
@@ -90,6 +110,8 @@ class ContentsController extends Controller
 
         $tagIds = [];
 
+        $benhId = null;
+
         foreach ($data as $key => $value) {
             foreach ($fields as $field) {
                 if ($key == $field['value'] || (isset($field['edit_value'])) && $key == $field['edit_value']) {
@@ -101,6 +123,9 @@ class ContentsController extends Controller
                         }
                     } else if ($field['type'] == 'boolean') {
                         $data[$key] = ($request->input($key) == 'on') ? true : false;
+                    }  else if ($field['type'] == 'special') {
+                        $benhId = $data[$key];
+                        unset($data[$key]);
                     } else if ($field['type'] == 'tag') {
                         $tagIds = [];
                         foreach ($request->input('tag_list') as $tag) {
@@ -114,6 +139,12 @@ class ContentsController extends Controller
         $newContent = $modelName::create($data);
         if ($tagIds) {
             $newContent->tags()->sync($tagIds);
+        }
+        if ($benhId) {
+            \App\Content::create([
+                'thuoc_id' => $newContent->id,
+                'benh_id' => $benhId
+            ]);
         }
         flash('Create '.str_singular($realModel).' success!', 'success');
         return $request->input('redirect_back') ? redirect()->to($request->input('redirect_back')) : redirect('admin/'.$realModel);
@@ -136,6 +167,8 @@ class ContentsController extends Controller
 
         $tagIds = [];
 
+        $benhId = null;
+
         foreach ($data as $key => $value) {
             foreach ($fields as $field) {
                 if ($key == $field['value'] || (isset($field['edit_value'])) && $key == $field['edit_value']) {
@@ -147,7 +180,10 @@ class ContentsController extends Controller
                         }
                     } else if ($field['type'] == 'boolean') {
                         $data[$key] = ($request->input($key) == 'on') ? true : false;
-                    } else if ($field['type'] == 'tag') {
+                    }  else if ($field['type'] == 'special') {
+                        $benhId = $data[$key];
+                        unset($data[$key]);
+                    }else if ($field['type'] == 'tag') {
                         $tagIds = [];
                         foreach ($request->input('tag_list') as $tag) {
                             $tagIds[] = Tag::firstOrCreate(['title' => $tag])->id;
@@ -160,6 +196,12 @@ class ContentsController extends Controller
         $modelContent->update($data);
         if ($tagIds) {
             $modelContent->tags()->sync($tagIds);
+        }
+        if ($benhId) {
+            \App\Content::create([
+                'thuoc_id' => $modelContent->id,
+                'benh_id' => $benhId
+            ]);
         }
         flash('Update '.str_singular($realModel).' success!', 'success');
         return $request->input('redirect_back') ? redirect()->to($request->input('redirect_back')) : redirect('admin/'.$realModel);

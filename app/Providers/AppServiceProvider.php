@@ -31,7 +31,33 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->composer('frontend.right', function ($view) {
-            $view->with('mostReads', Post::where('status', true)->orderBy('views', 'desc')->limit(5)->get());
+            $mostReadIds =  DB::table('modules')
+                ->where('key_content', 'posts')
+                ->where('key_type', 'is_most_read')
+                ->pluck('key_value')
+                ->all();
+
+            $mostReadPost = Post::where('status', true)
+                ->whereIn('id', $mostReadIds)
+                ->where('category_id', 5)
+                ->limit(5)
+                ->get();
+
+            $view->with('mostReads', $mostReadPost);
+
+            $latestNewIds =  DB::table('modules')
+                ->where('key_content', 'posts')
+                ->where('key_type', 'is_latest_news')
+                ->pluck('key_value')
+                ->all();
+
+            $latestPost = Post::where('status', true)
+                ->whereIn('id', $latestNewIds)
+                ->where('category_id', 5)
+                ->limit(5)
+                ->get();
+
+            $view->with('latestNews', $latestPost);
         });
 
         view()->composer('frontend.template', function($view){
