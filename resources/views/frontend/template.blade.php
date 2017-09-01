@@ -66,7 +66,7 @@
                     <div id="slider-2">
                         @foreach ($featureProducts as $product)
                             <div class="item">
-                                <a href="{{$product->link}}"><img src="{{url('img/cache/303x244', $product->image)}}" alt="{{$product->title}}" width="220" height="140"></a>
+                                <a href="{{$product->link}}"><img src="{{url('files', $product->image)}}" alt="{{$product->title}}" width="220" height="140"></a>
                                 <div class="pro-name"><a href="{{$product->link}}">{{$product->title}}</a></div>
                                 <div class="des">{{str_limit($product->desc, 140)}}</div>
                             </div>

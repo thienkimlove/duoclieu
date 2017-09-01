@@ -108,6 +108,6 @@ return array(
     |
     */
    
-    'lifetime' => 43200,
+    'lifetime' => null,
 
 );

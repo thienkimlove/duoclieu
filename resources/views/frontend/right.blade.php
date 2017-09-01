@@ -6,7 +6,7 @@
                 @foreach ($mostReadInCategory as $mostRead)
                     <div class="most-post">
                         <a href="{{url($mostRead->slug.'.html')}}" title="{{$mostRead->title}}" class="img-title">
-                            <img src="{{url('img/cache/119x99', $mostRead->image)}}" alt="" width="119" height="99">
+                            <img src="{{url('files', $mostRead->image)}}" alt="" width="119" height="99">
                         </a>
                         <a href="{{url($mostRead->slug.'.html')}}" class="title" title="{{$mostRead->title}}">
                             {{$mostRead->title}}
@@ -23,7 +23,7 @@
                     @foreach ($mostReads as $mostRead)
                         <div class="most-post">
                             <a href="{{url($mostRead->slug.'.html')}}" title="{{$mostRead->title}}" class="img-title">
-                                <img src="{{url('img/cache/119x99', $mostRead->image)}}" alt="" width="119" height="99">
+                                <img src="{{url('files', $mostRead->image)}}" alt="" width="119" height="99">
                             </a>
                             <a href="{{url($mostRead->slug.'.html')}}" class="title" title="{{$mostRead->title}}">
                                 {{$mostRead->title}}
@@ -51,7 +51,7 @@
                     @foreach ($latestNewInCategory as $mostRead)
                         <div class="most-post">
                             <a href="{{url($mostRead->slug.'.html')}}" title="{{$mostRead->title}}" class="img-title">
-                                <img src="{{url('img/cache/119x99', $mostRead->image)}}" alt="" width="119" height="99">
+                                <img src="{{url('files', $mostRead->image)}}" alt="" width="119" height="99">
                             </a>
                             <a href="{{url($mostRead->slug.'.html')}}" class="title" title="{{$mostRead->title}}">
                                 {{$mostRead->title}}
@@ -68,7 +68,7 @@
                     @foreach ($latestNews as $mostRead)
                         <div class="most-post">
                             <a href="{{url($mostRead->slug.'.html')}}" title="{{$mostRead->title}}" class="img-title">
-                                <img src="{{url('img/cache/119x99', $mostRead->image)}}" alt="" width="119" height="99">
+                                <img src="{{url('files', $mostRead->image)}}" alt="" width="119" height="99">
                             </a>
                             <a href="{{url($mostRead->slug.'.html')}}" class="title" title="{{$mostRead->title}}">
                                 {{$mostRead->title}}

@@ -18,7 +18,7 @@
                     <div id="tab-{{$k+1}}" class="{{($k==0)? 'content active' : 'content'}}">
                         @foreach ($cate->index_posts->slice(0,3) as $indexPost)
                           <div class="post">
-                            <img src="{{url('img/cache/287x179', $indexPost->image)}}" alt="" width="287" height="179">
+                            <img src="{{url('files', $indexPost->image)}}" alt="" width="287" height="179">
                             <h4><a href="{{url($indexPost->slug.'.html')}}" class="title" title="{{$indexPost->title}}">{{$indexPost->title}}</a></h4>
                             <div class="sumary">{{str_limit($indexPost->desc, 85)}}</div>
                             <div class="related-news">
@@ -51,7 +51,7 @@
                           @if ($firstPost = $cate->index_posts->shift())
                             <div class="hot-news">
                                 <div class="post">
-                                    <img src="{{url('img/cache/301x183', $firstPost->image)}}" alt="" width="301" height="183">
+                                    <img src="{{url('files', $firstPost->image)}}" alt="" width="301" height="183">
                                     <h4><a href="{{url($firstPost->slug.'.html')}}" class="title" title="{{$firstPost->title}}">{{$firstPost->title}}</a></h4>
                                     <div class="sumary">{{str_limit($firstPost->desc, 140)}}</div>
                                 </div>
@@ -60,7 +60,7 @@
                         <div class="news">
                             @foreach($cate->index_posts->slice(0, 3) as $indexPost)
                               <div class="post">
-                                <img src="{{url('img/cache/126x90', $indexPost->image)}}" alt="" width="126" height="90">
+                                <img src="{{url('files', $indexPost->image)}}" alt="" width="126" height="90">
                                 <div class="news-info">
                                     <h4><a href="{{url($indexPost->slug.'.html')}}" class="title" title="{{$indexPost->title}}">{{$indexPost->title}}</a></h4>
                                     <div class="sumary">{{str_limit($indexPost->desc, 120)}}</div>
@@ -112,7 +112,7 @@
                        <div class="cus">
                         <div class="cus-info">
                             <div class="above">
-                                <img src="{{url('img/cache/46x46', $comment->avatar)}}"
+                                <img src="{{url('files', $comment->avatar)}}"
                                      alt=""
                                      class="avatar"
                                      width="46"

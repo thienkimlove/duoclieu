@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'content' => [
@@ -761,7 +761,7 @@ return [
         ],
     ],
     'users' => [
-        'manhquan.do@ved.com.vn' => 'admin',
+        'quan.dm@teko.vn' => 'admin',
         'truongkien1511@gmail.com' => 'admin',
         'linhptk@tuelinh.com' => 'admin',
         'hongvt@tuelinh.com' => 'admin',
@@ -771,14 +771,17 @@ return [
         'huylc@tuelinh.com' => 'admin',
         'maintt@tuelinh.com' => 'admin',
         'annt@tuelinh.com' => 'admin',
-		'minhnt@tuelinh.com' => 'admin',
-		'ngocanh271198@gmail.com' => 'admin',
-		'annghiem88@gmail.com' => 'admin',
-		'tunt@caia.vn' => 'admin',
-		'hungth@caia.vn' => 'admin',
-		'phuongnd@caia.vn' => 'admin',
-		'trangth@caia.vn' => 'admin',
-
+        'minhnt@tuelinh.com' => 'admin',
+        'ngocanh271198@gmail.com' => 'admin',
+        'annghiem88@gmail.com' => 'admin',
+        'tunt@caia.vn' => 'admin',
+        'hungth@caia.vn' => 'admin',
+        'phuongnd@caia.vn' => 'admin',
+        'trangth@caia.vn' => 'admin',
+        'yenlth@tuelinh.com' => 'admin',
+        'huongnl@caia.vn' => 'admin',
+        'huenguyen291293@gmail.com' => 'admin',
+        'hieuvd@tuelinh.com' => 'admin',
         'test@example.com' => 'editor'
     ],
     'permission' => [

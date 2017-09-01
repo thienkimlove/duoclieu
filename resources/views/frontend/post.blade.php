@@ -74,7 +74,7 @@
                             <div class="post post-news">
                                 <div class="post-content">
                                     <a href="{{url($uPost->slug.'.html')}}" title="{{$uPost->title}}" class="img-title">
-                                        <img src="{{url('img/cache/224x135', $uPost->image)}}" alt="" width="224" height="135" class="imgFull">
+                                        <img src="{{url('files', $uPost->image)}}" alt="" width="224" height="135" class="imgFull">
                                     </a>
                                     <a href="{{url($uPost->slug.'.html')}}" class="name" title="Giảo cổ lam"> {{$uPost->name}}</a>
                                     <a href="{{url($uPost->slug.'.html')}}" class="title" title="Tên khoa học">

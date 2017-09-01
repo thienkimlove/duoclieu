@@ -13,7 +13,7 @@
                        <div class="hot-news">
                     <div class="post" id="post-hot-news">
                         <a href="{{url($post->slug.'.html')}}" title="{{$post->title}}" class="img-title">
-                            <img src="{{url('img/cache/453x326', $post->image)}}" alt="" width="432" height="311">
+                            <img src="{{url('files', $post->image)}}" alt="" width="432" height="311">
                         </a>
                         <div class="right">
                             <a href="{{url($post->slug.'.html')}}" class="title" title="{{$post->title}}">
@@ -32,7 +32,7 @@
                     @foreach ($posts as $post)
                     <div class="post post-news">
                         <a href="{{url($post->slug.'.html')}}" title="{{$post->title}}" class="img-title">
-                            <img src="{{url('img/cache/275x156', $post->image)}}" alt="" width="276" height="157">
+                            <img src="{{url('files', $post->image)}}" alt="" width="276" height="157">
                         </a>
                         <div class="right">
                             <a href="{{url($post->slug.'.html')}}" class="title" title="{{$post->title}}">
